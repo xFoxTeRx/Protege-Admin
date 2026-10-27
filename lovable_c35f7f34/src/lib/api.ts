@@ -1,6 +1,5 @@
 // Cliente HTTP hacia el Gateway .NET. Inyecta X-Tenant automáticamente.
-export const API_BASE_URL: string =
-  (import.meta.env["https://vjxkpprx-5000.brs.devtunnels.ms"] as string | undefined);
+export const API_BASE_URL: string = "https://vjxkpprx-5000.brs.devtunnels.ms";
 
 const TENANT_KEY = "tenantId";
 const SLUG_KEY = "tenantSlug";
@@ -23,6 +22,7 @@ export async function api<T = unknown>(path: string, init: RequestInit = {}): Pr
   const tenant = session.getTenantId();
   if (tenant) headers.set("X-Tenant", tenant);
   if (init.body && !headers.has("Content-Type")) headers.set("Content-Type", "application/json");
+  
   const res = await fetch(`${API_BASE_URL}${path}`, { ...init, headers });
   const text = await res.text();
   if (!res.ok) throw new Error(`${res.status} ${res.statusText}${text ? ` — ${text}` : ""}`);
@@ -41,7 +41,6 @@ export type Alerta = {
 
 /**
  * Valida el slug del tenant contra el Gateway y devuelve su TenantId.
- * Endpoint asumido: GET /api/Tenants/{slug} → { id } o { tenantId }.
  */
 export async function resolveTenant(slug: string): Promise<string> {
   const data = await api<{ id?: string; tenantId?: string }>(
