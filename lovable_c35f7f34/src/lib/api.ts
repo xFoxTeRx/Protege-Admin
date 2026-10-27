@@ -1,5 +1,5 @@
 // Cliente HTTP hacia el Gateway .NET. Inyecta X-Tenant automáticamente.
-export const API_BASE_URL: string = "https://vjxkpprx-5000.brs.devtunnels.ms";
+export const API_BASE_URL: string = "https://vjxkpprx-5000.brs.devtunnels.ms/scalar";
 
 const TENANT_KEY = "tenantId";
 const SLUG_KEY = "tenantSlug";
